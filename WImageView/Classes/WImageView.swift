@@ -10,9 +10,26 @@ public class WImageView: UIView {
         return view
     }()
     
+    @IBInspectable public var URLString: String? {
+        set {
+            self.url = URL(string: newValue ?? "")
+        }
+        get {
+            return self.url?.absoluteString
+        }
+    }
+    
     public var url: URL? {
         set {
             if newValue != item?.url {
+                if let item = self.item {
+                    WImage.shared.cancel(item: item)
+                }
+                if let url = newValue {
+                    self.item = WImage.shared.load(url: url)
+                } else {
+                    self.item = nil
+                }
                 self.updateImage()
             }
         }

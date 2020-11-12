@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WImage
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,7 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        WImage.shared.setURLHandler(urlHandler: self)
         return true
     }
 
@@ -34,3 +36,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: WURLHandlerProtocol  {
+    
+    func handle(url: URL, width: Int?, height: Int?) -> URL {
+        guard let width = width else {
+          return url
+        }
+        if let height = height {
+          let newUrlString = url.absoluteString.replacingOccurrences(of: "/100x100/", with: "/\(width)x\(height)/").replacingOccurrences(of: "/100/100/", with: "/\(width)/\(height)/")
+          return URL(string: newUrlString)!
+        }
+        let newUrlString = url.absoluteString.replacingOccurrences(of: "/100x100/", with: "/\(width)/")
+        return URL(string: newUrlString)!
+    }
+    
+
+
+}

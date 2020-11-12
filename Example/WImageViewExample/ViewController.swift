@@ -16,7 +16,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+      
+        self.imageView2.url = URL(string: "https://dummyimage.com/100x100/0000ff/000000.png")
     }
 
     @IBAction func buttonTouch(_ sender: Any) {
