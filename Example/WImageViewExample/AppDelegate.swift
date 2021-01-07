@@ -38,7 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: WURLHandlerProtocol  {
     
-    func handle(url: URL, width: Int?, height: Int?) -> URL {
+    func handle(path: String, width: Int?, height: Int?) -> URL? {
+        guard let url = URL(string: path) else {
+            fatalError("Incorrect path")
+        }
         guard let width = width else {
           return url
         }

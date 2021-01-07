@@ -10,34 +10,22 @@ public class WImageView: UIView {
         return view
     }()
     
-    @IBInspectable public var URLString: String? {
+    @IBInspectable public var imagePath: String? {
         set {
-            self.url = URL(string: newValue ?? "")
-        }
-        get {
-            return self.url?.absoluteString
-        }
-    }
-    
-    public var url: URL? {
-        set {
-            if newValue != item?.url {
-                if let item = self.item {
-                    WImage.shared.cancel(item: item)
-                }
-                if let url = newValue {
-                    self.item = WImage.shared.load(url: url)
-                } else {
-                    self.item = nil
-                }
-                self.updateImage()
+            if let item = self.item {
+                WImage.shared.cancel(item: item)
             }
+            if let path = newValue {
+                self.item = WImage.shared.load(path: path)
+            } else {
+                self.item = nil
+            }
+            self.updateImage()
         }
         get {
-            return item?.url
+            return self.item?.path
         }
     }
-    
     
     override public func layoutSubviews() {
         super.layoutSubviews()
@@ -50,8 +38,8 @@ public class WImageView: UIView {
     }
     
     private func updateImage() {
-        if let url = self.url {
-            WImage.shared.load(url: url, width: self.frame.width, height: self.frame.height, priority: .normal) { image in
+        if let path = self.imagePath {
+            WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) { image in
                 self.imageView.image = image
             }
         } else {
