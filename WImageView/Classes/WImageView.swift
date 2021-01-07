@@ -1,14 +1,22 @@
 import UIKit
 import WImage
 
-public class WImageView: UIView {
+public class WImageView: UIImageView {
     
     private var item: WItem?
-    private lazy var  imageView: UIImageView = {
-        let view = UIImageView()
-        self.addSubview(view)
-        return view
-    }()
+    
+    public override var frame: CGRect {
+        get {
+            super.frame
+        } set {
+            if super.frame.size != newValue.size && self.item != nil {
+                super.frame = newValue
+                self.updateImage()
+            } else {
+                super.frame = newValue
+            }
+        }
+    }
     
     @IBInspectable public var imagePath: String? {
         set {
@@ -27,23 +35,13 @@ public class WImageView: UIView {
         }
     }
     
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let newFrame = CGRect(x:0, y: 0, width: self.frame.width, height:self.frame.height)
-        if self.imageView.frame != newFrame {
-            self.imageView.frame = frame
-            self.updateImage()
-        }
-    }
-    
     private func updateImage() {
         if let path = self.imagePath {
             WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) { image in
-                self.imageView.image = image
+                self.image = image
             }
         } else {
-            self.imageView.image = nil
+            self.image = nil
         }
     }
 }
