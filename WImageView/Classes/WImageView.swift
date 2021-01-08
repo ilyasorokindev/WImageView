@@ -20,6 +20,9 @@ public class WImageView: UIImageView {
     
     @IBInspectable public var imagePath: String? {
         set {
+            if newValue == self.item?.path {
+                return
+            }
             if let item = self.item {
                 WImage.shared.cancel(item: item)
             }

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "WImage",
+        "repositoryURL": "https://github.com/ilyasorokindev/WImage",
+        "state": {
+          "branch": "master",
+          "revision": "ab834e1c5887417df10894991de24745401836ce",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
