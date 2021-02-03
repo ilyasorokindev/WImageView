@@ -19,28 +19,21 @@ public class WImageView: UIImageView {
     }
     
     @IBInspectable public var imagePath: String? {
-        set {
-            if newValue == self.item?.path {
+        didSet {
+            if self.imagePath == self.item?.path {
                 return
             }
             if let item = self.item {
                 WImage.shared.cancel(item: item)
-            }
-            if let path = newValue {
-                self.item = WImage.shared.load(path: path)
-            } else {
                 self.item = nil
             }
             self.updateImage()
-        }
-        get {
-            return self.item?.path
         }
     }
     
     private func updateImage() {
         if let path = self.imagePath {
-            WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) {  [weak self] image in
+            self.item = WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) {  [weak self] image in
                 self?.image = image
             }
         } else {
