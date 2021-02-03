@@ -40,8 +40,8 @@ public class WImageView: UIImageView {
     
     private func updateImage() {
         if let path = self.imagePath {
-            WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) { image in
-                self.image = image
+            WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) {  [weak self] image in
+                self?.image = image
             }
         } else {
             self.image = nil
