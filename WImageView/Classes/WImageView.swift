@@ -27,6 +27,7 @@ public class WImageView: UIImageView {
                 WImage.shared.cancel(item: item)
                 self.item = nil
             }
+            self.image = nil
             self.updateImage()
         }
     }
@@ -36,8 +37,6 @@ public class WImageView: UIImageView {
             self.item = WImage.shared.load(path: path, width: self.frame.width, height: self.frame.height, priority: .normal) {  [weak self] image in
                 self?.image = image
             }
-        } else {
-            self.image = nil
-        }
+        } 
     }
 }
